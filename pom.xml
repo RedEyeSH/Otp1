@@ -66,7 +66,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>week6.TimeCal</mainClass>
+                            <mainClass>week3.InClassAssignment.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
