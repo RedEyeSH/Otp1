@@ -1,15 +1,14 @@
 package week6;
 
-import java.util.Scanner;
-
 public class TimeCal {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.print("Enter distance in km: ");
-        double distance = sc.nextDouble();
+        if (args.length < 2) {
+            System.out.println("Usage: java -jar Otp1-1.0-SNAPSHOT.jar <distance> <speed>");
+            return;
+        }
 
-        System.out.print("Enter speed in km/h: ");
-        double speed = sc.nextDouble();
+        double distance = Double.parseDouble(args[0]);
+        double speed = Double.parseDouble(args[1]);
 
         System.out.println("The required time to reach: " + calculateTime(distance, speed) + "h");
     }
