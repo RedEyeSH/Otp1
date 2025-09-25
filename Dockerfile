@@ -14,15 +14,11 @@ LABEL authors="quang"
 
 WORKDIR /app
 
-# Install Java and Maven
 RUN apt-get update && apt-get install -y openjdk-17-jdk maven
 
-# Copy project files
 COPY pom.xml /app
 COPY . /app
 
-# Build the project
 RUN mvn clean package
 
-# Run the JAR (use correct name)
 CMD ["java", "-jar", "target/Otp1-1.0-SNAPSHOT.jar"]
