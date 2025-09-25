@@ -14,13 +14,15 @@ LABEL authors="quang"
 
 WORKDIR /app
 
-# Install Maven + OpenJDK
-RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk maven && \
-    rm -rf /var/lib/apt/lists/*
+# Install Java and Maven
+RUN apt-get update && apt-get install -y openjdk-17-jdk maven
 
-COPY pom.xml .
-COPY . .
-RUN mvn package -DskipTests
+# Copy project files
+COPY pom.xml /app
+COPY . /app
 
-CMD ["java", "-jar", "target/timecal.jar"]
+# Build the project
+RUN mvn clean package
+
+# Run the JAR (use correct name)
+CMD ["java", "-jar", "target/Otp1-1.0-SNAPSHOT.jar"]
