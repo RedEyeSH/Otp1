@@ -1,9 +1,8 @@
 pipeline {
     agent any
-    tools {
-        maven 'ChocoMaven'
-    }
-
+tools{
+    maven 'ChocoMaven' // Maven3 is the name of *your own* defined maven name in Jenkins.
+}
     stages {
         stage('Checkout') {
             steps {
@@ -12,7 +11,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat 'mvn clean install' // sh for linux and ios
+                bat 'mvn clean install'
             }
         }
         stage('Test') {
@@ -35,24 +34,5 @@ pipeline {
                 jacoco()
             }
         }
-    }
-}
-
-post {
-    always {
-        // Publish JUnit test results
-        junit '**/target/surefire-reports/*.xml'
-
-        // Publish JaCoCo HTML report
-        publishHTML([
-            reportDir: 'target/site/jacoco',
-            reportFiles: 'index.html',
-            reportName: 'JaCoCo Coverage Report',
-            alwaysLinkToLastBuild: true,
-            keepAll: true,
-            allowMissing: true
-        ])
-
-        echo 'Pipeline completed with tests and coverage.'
     }
 }
