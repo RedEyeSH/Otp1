@@ -13,7 +13,14 @@ FROM ubuntu:latest
 LABEL authors="quang"
 
 WORKDIR /app
-COPY pom.xml /app
-COPY . /app
-RUN mvn package
+
+# Install Maven + OpenJDK
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jdk maven && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY pom.xml .
+COPY . .
+RUN mvn package -DskipTests
+
 CMD ["java", "-jar", "target/timecal.jar"]
