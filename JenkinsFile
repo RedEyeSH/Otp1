@@ -1,34 +1,42 @@
 pipeline {
     agent any
-tools{
-    maven 'ChocoMaven' // Maven3 is the name of *your own* defined maven name in Jenkins.
-}
+
+    tools {
+        maven 'ChocoMaven'
+        git 'Default'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/RedEyeSH/Otp1.git'
+                git branch: 'main', url: 'https://github.com/RedEyeSH/Otp1.git'
             }
         }
+
         stage('Build') {
             steps {
                 bat 'mvn clean install'
             }
         }
+
         stage('Test') {
             steps {
                 bat 'mvn test'
             }
         }
+
         stage('Code Coverage') {
             steps {
                 bat 'mvn jacoco:report'
             }
         }
+
         stage('Publish Test Results') {
             steps {
                 junit '**/target/surefire-reports/*.xml'
             }
         }
+
         stage('Publish Coverage Report') {
             steps {
                 jacoco()
