@@ -10,15 +10,10 @@
 #CMD ["java", "-jar", "target/timecal.jar"]
 
 FROM ubuntu:latest
-LABEL authors="quang"
-
 WORKDIR /app
-
-RUN apt-get update && apt-get install -y openjdk-17-jdk maven
-
 COPY pom.xml /app
 COPY . /app
-
+RUN apt-get update && apt-get install -y openjdk-17-jdk maven
 RUN mvn clean package
-
 CMD ["java", "-jar", "target/Otp1-1.0-SNAPSHOT.jar"]
+
