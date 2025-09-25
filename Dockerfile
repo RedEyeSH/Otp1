@@ -1,4 +1,8 @@
 FROM ubuntu:latest
 LABEL authors="quang"
 
-ENTRYPOINT ["top", "-b"]
+WORKDIR /app
+COPY pom.xml /app
+COPY. /app
+RUN mvn package
+CMD["java", "-jar", "target/timecal.jar"]
