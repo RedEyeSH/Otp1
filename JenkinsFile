@@ -1,17 +1,18 @@
 pipeline {
     agent any
-tools{
-    maven 'Maven3' // Maven3 is the name of *your own* defined maven name in Jenkins.
-}
+    tools {
+        maven 'Maven3'
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/RedEyeSH/Otp1.git'
+                git: 'https://github.com/RedEyeSH/Otp1.git'
             }
         }
         stage('Build') {
             steps {
-                bat 'mvn clean install'
+                bat 'mvn clean install' // sh for linux and ios
             }
         }
         stage('Test') {
@@ -33,6 +34,26 @@ tools{
             steps {
                 jacoco()
             }
+        }
+    }
+}
+
+post {
+        always {
+            // Publish JUnit test results
+            junit '**/target/surefire-reports/*.xml'
+
+            // Publish JaCoCo HTML report
+            publishHTML([
+                reportDir: 'target/site/jacoco',
+                reportFiles: 'index.html',
+                reportName: 'JaCoCo Coverage Report',
+                alwaysLinkToLastBuild: true,
+                keepAll: true,
+                allowMissing: true
+            ])
+
+            echo 'Pipeline completed with tests and coverage.'
         }
     }
 }
