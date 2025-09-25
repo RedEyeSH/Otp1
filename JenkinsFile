@@ -39,21 +39,20 @@ pipeline {
 }
 
 post {
-        always {
-            // Publish JUnit test results
-            junit '**/target/surefire-reports/*.xml'
+    always {
+        // Publish JUnit test results
+        junit '**/target/surefire-reports/*.xml'
 
-            // Publish JaCoCo HTML report
-            publishHTML([
-                reportDir: 'target/site/jacoco',
-                reportFiles: 'index.html',
-                reportName: 'JaCoCo Coverage Report',
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                allowMissing: true
-            ])
+        // Publish JaCoCo HTML report
+        publishHTML([
+            reportDir: 'target/site/jacoco',
+            reportFiles: 'index.html',
+            reportName: 'JaCoCo Coverage Report',
+            alwaysLinkToLastBuild: true,
+            keepAll: true,
+            allowMissing: true
+        ])
 
-            echo 'Pipeline completed with tests and coverage.'
-        }
+        echo 'Pipeline completed with tests and coverage.'
     }
 }
